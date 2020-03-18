@@ -24,14 +24,13 @@ class Listener(pingpong_pb2_grpc.PingPongServiceServicer):
             self.counter = 0
         return pingpong_pb2.Pong(count=request.count + 1)
 
-
 def serve():
     """The main serve function of the server.
     This opens the socket, and listens for incoming grpc conformant packets"""
 
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=1))
     pingpong_pb2_grpc.add_PingPongServiceServicer_to_server(Listener(), server)
-    server.add_insecure_port("[::]:9999")
+    server.add_insecure_port("[::]:7860")
     server.start()
     try:
         while True:
